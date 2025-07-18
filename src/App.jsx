@@ -10,6 +10,7 @@ function convertDayToPrayerArray(dayObj) {
   if (!dayObj) return [];
   return [
     { name: "Fajr", time: dayObj.fajr_start, iqamah: dayObj.fajr_jamaat },
+    { name: "Sunrise", time: dayObj.sunrise, iqamah: "" },
     { name: "Dhuhr", time: dayObj.dhuhr_start, iqamah: dayObj.dhuhr_jamaat },
     { name: "Asr", time: dayObj.asr_start, iqamah: dayObj.asr_jamaat },
     { name: "Maghrib", time: dayObj.maghrib_start, iqamah: dayObj.maghrib_jamaat },
