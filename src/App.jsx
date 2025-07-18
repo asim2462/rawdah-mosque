@@ -84,6 +84,7 @@ function App() {
 
   // Get today's date in UK time zone
   const todayStr = getUKTodayString();
+  console.log(todayStr);
 
   // Ensure 100vh fix for mobile browsers (for full-height layout)
   useEffect(() => {
@@ -125,6 +126,7 @@ function App() {
         setError("Could not fetch prayer times.");
         setLoading(false);
       });
+
   }, [todayStr]);
 
   // Determine the next upcoming prayer
