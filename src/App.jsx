@@ -3,8 +3,8 @@ import PrayerTimes from "./components/PrayerTimes";
 import Countdown from "./components/Countdown";
 import Papa from "papaparse";
 
-// Replace with your real published Google Sheets CSV link:
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRU7YWb2LM-bBj8Fnd1frBmLI9cqk52XknydDWbIHzpOed4Fg7EMgiu_QSaP5cqWkpjFnDKgXCI0dX0/pub?gid=0&single=true&output=csv"; // <-- update with your sheet link
+// Replace with your actual published Google Sheets CSV link:
+const SHEET_CSV_URL = "YOUR_CSV_URL_HERE";
 
 function convertDayToPrayerArray(dayObj) {
   if (!dayObj) return [];
@@ -96,50 +96,49 @@ function App() {
   const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col items-center">
-      <h1 className="w-full text-center text-2xl sm:text-3xl md:text-4xl font-bold mt-8 mb-4 text-blue-600">
-        Rawda Mosque Prayer Times
-      </h1>
-      {loading ? (
-        <p className="mt-8 text-lg text-gray-500">Loading...</p>
-      ) : error ? (
-        <p className="mt-8 text-red-600">{error}</p>
-      ) : !todayObj ? (
-        <p className="mt-8 text-lg text-gray-500">No data for today.</p>
-      ) : (
-        <>
-          {/* Date and Islamic month at top */}
-          <div className="mb-2 text-center">
-            <div className="font-bold text-lg">
-              {formatDateDisplay(todayObj.day, todayObj.date)}
-            </div>
-            {/* Dynamic Islamic month and day */}
-            {todayObj.islamic_month && todayObj.islamic_day && (
-              <div className="text-sm text-gray-500">
-                {todayObj.islamic_day} {todayObj.islamic_month}
+    <div className="min-h-screen flex flex-col bg-slate-100">
+      <div className="flex flex-col items-center flex-1">
+        <h1 className="w-full text-center text-2xl sm:text-3xl md:text-4xl font-bold mt-8 mb-4 text-blue-600">
+          Rawdah Mosque Prayer Times
+        </h1>
+        {loading ? (
+          <p className="mt-8 text-lg text-gray-500">Loading...</p>
+        ) : error ? (
+          <p className="mt-8 text-red-600">{error}</p>
+        ) : !todayObj ? (
+          <p className="mt-8 text-lg text-gray-500">No data for today.</p>
+        ) : (
+          <>
+            {/* Date and Islamic month at top */}
+            <div className="mb-2 text-center">
+              <div className="font-bold text-lg">
+                {formatDateDisplay(todayObj.day, todayObj.date)}
               </div>
+              {todayObj.islamic_month && todayObj.islamic_day && (
+                <div className="text-sm text-gray-500">
+                  {todayObj.islamic_month} {todayObj.islamic_day}
+                </div>
+              )}
+            </div>
+            {/* Countdown */}
+            {nextPrayer && (
+              <Countdown
+                targetDateTime={nextPrayer.dateObj}
+                label={nextPrayer.name}
+              />
             )}
-          </div>
-          {/* Countdown */}
-          {nextPrayer && (
-            <Countdown
-              targetDateTime={nextPrayer.dateObj}
-              label={nextPrayer.name}
-            />
-          )}
-          {/* Table */}
-          <PrayerTimes times={prayerTimes} />
-        </>
-      )}
-
-      {/* Disclaimer */}
-      <footer className="fixed bottom-0 left-0 right-0 z-50 bg-slate-100 py-2 flex justify-center">
+            {/* Table */}
+            <PrayerTimes times={prayerTimes} />
+          </>
+        )}
+      </div>
+      {/* Footer always at the bottom, only scrolls if content is long */}
+      <footer className="w-full flex justify-center bg-slate-100 py-2 border-t border-gray-200">
         <p className="text-center text-xs text-gray-500 max-w-xl">
           This is an <span className="font-semibold">unofficial prayer times app</span> for the Rawdah Mosque.
           It is <span className="font-semibold">not affiliated</span> with Greensville Trust/Rawdah Mosque.
         </p>
       </footer>
-
     </div>
   );
 }
