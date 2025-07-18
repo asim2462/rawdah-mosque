@@ -3,21 +3,37 @@ import PrayerTimes from "./components/PrayerTimes";
 import Countdown from "./components/Countdown";
 import Papa from "papaparse";
 
-// Replace with your actual published Google Sheets CSV link:
+// === Google Sheet CSV URL ===
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRU7YWb2LM-bBj8Fnd1frBmLI9cqk52XknydDWbIHzpOed4Fg7EMgiu_QSaP5cqWkpjFnDKgXCI0dX0/pub?gid=0&single=true&output=csv";
 
+// --- Utility: Get today's date string in UK time (YYYY-MM-DD) ---
+function getUKTodayString() {
+  const now = new Date();
+  // Returns "dd/mm/yyyy" in UK time
+  const ukDateParts = now.toLocaleDateString("en-GB", {
+    timeZone: "Europe/London",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).split("/");
+  // Format as "yyyy-mm-dd"
+  return `${ukDateParts[2]}-${ukDateParts[1]}-${ukDateParts[0]}`;
+}
+
+// --- Utility: Convert a day's data into prayer array (including Sunrise) ---
 function convertDayToPrayerArray(dayObj) {
   if (!dayObj) return [];
   return [
     { name: "Fajr", time: dayObj.fajr_start, iqamah: dayObj.fajr_jamaat },
-    { name: "Sunrise", time: dayObj.sunrise, iqamah: "" },
+    { name: "Sunrise", time: dayObj.sunrise, iqamah: "" }, // Sunrise row
     { name: "Dhuhr", time: dayObj.dhuhr_start, iqamah: dayObj.dhuhr_jamaat },
     { name: "Asr", time: dayObj.asr_start, iqamah: dayObj.asr_jamaat },
     { name: "Maghrib", time: dayObj.maghrib_start, iqamah: dayObj.maghrib_jamaat },
-    { name: "Isha", time: dayObj.isha_start, iqamah: dayObj.isha_jamaat }
+    { name: "Isha", time: dayObj.isha_start, iqamah: dayObj.isha_jamaat },
   ];
 }
 
+// --- Utility: Find next prayer time; if all passed, use tomorrow's Fajr ---
 function getNextPrayer(prayers, tomorrowPrayers) {
   if (!prayers || prayers.length === 0) return null;
   const now = new Date();
@@ -35,7 +51,7 @@ function getNextPrayer(prayers, tomorrowPrayers) {
       return { ...prayers[i], dateObj: prayerTime };
     }
   }
-  // If all have passed, return tomorrow's Fajr
+  // All prayers have passed: return tomorrow's Fajr
   if (tomorrowPrayers && tomorrowPrayers.length > 0 && tomorrowPrayers[0].time) {
     const [hour, minute] = tomorrowPrayers[0].time.split(":").map(Number);
     const fajrTime = new Date(
@@ -50,6 +66,7 @@ function getNextPrayer(prayers, tomorrowPrayers) {
   return null;
 }
 
+// --- Utility: Format date for display (e.g. "Friday 19-07-2025") ---
 function formatDateDisplay(day, dateStr) {
   if (!dateStr || !day) return "";
   const [year, month, dayNum] = dateStr.split("-");
@@ -57,6 +74,7 @@ function formatDateDisplay(day, dateStr) {
 }
 
 function App() {
+  // State for all main app data
   const [prayerTimes, setPrayerTimes] = useState([]);
   const [todayObj, setTodayObj] = useState(null);
   const [tomorrowObj, setTomorrowObj] = useState(null);
@@ -64,23 +82,38 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const today = new Date();
-  const todayStr = today.toISOString().split("T")[0];
+  // Get today's date in UK time zone
+  const todayStr = getUKTodayString();
 
+  // Ensure 100vh fix for mobile browsers (for full-height layout)
+  useEffect(() => {
+    function setVh() {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    }
+    setVh();
+    window.addEventListener('resize', setVh);
+    return () => window.removeEventListener('resize', setVh);
+  }, []);
+
+  // Fetch and parse sheet, update state for today and tomorrow
   useEffect(() => {
     setLoading(true);
     fetch(SHEET_CSV_URL)
       .then(res => res.text())
       .then(csvText => {
         const { data } = Papa.parse(csvText, { header: true });
-
+        // Get today's row
         const todayData = data.filter(row => row.date === todayStr);
         setTodayObj(todayData[0]);
         setPrayerTimes(convertDayToPrayerArray(todayData[0]));
 
-        // Tomorrow's data
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
+        // Tomorrow's row (for countdown rollover)
+        const [year, month, dayNum] = todayStr.split("-");
+        const tomorrow = new Date(
+          Number(year),
+          Number(month) - 1,
+          Number(dayNum) + 1
+        );
         const tomorrowStr = tomorrow.toISOString().split("T")[0];
         const tomorrowData = data.filter(row => row.date === tomorrowStr);
         setTomorrowObj(tomorrowData[0]);
@@ -94,6 +127,7 @@ function App() {
       });
   }, [todayStr]);
 
+  // Determine the next upcoming prayer
   const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
 
   return (
@@ -125,7 +159,7 @@ function App() {
               <div
                 className="text-sm text-gray-500"
                 tabIndex={0}
-                aria-label={`Islamic Month: ${todayObj.islamic_day} ${todayObj.islamic_month} `}
+                aria-label={`Islamic Month: ${todayObj.islamic_day} ${todayObj.islamic_month}`}
               >
                 {todayObj.islamic_day} {todayObj.islamic_month}
               </div>
@@ -167,7 +201,6 @@ function App() {
       </footer>
     </div>
   );
-
 }
 
 export default App;
