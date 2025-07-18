@@ -4,7 +4,7 @@ import Countdown from "./components/Countdown";
 import Papa from "papaparse";
 
 // Replace with your actual published Google Sheets CSV link:
-const SHEET_CSV_URL = "YOUR_CSV_URL_HERE";
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRU7YWb2LM-bBj8Fnd1frBmLI9cqk52XknydDWbIHzpOed4Fg7EMgiu_QSaP5cqWkpjFnDKgXCI0dX0/pub?gid=0&single=true&output=csv";
 
 function convertDayToPrayerArray(dayObj) {
   if (!dayObj) return [];
