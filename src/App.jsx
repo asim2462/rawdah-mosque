@@ -96,51 +96,77 @@ function App() {
   const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-100">
-      <div className="flex flex-col items-center flex-1">
-        <h1 className="w-full text-center text-2xl sm:text-3xl md:text-4xl font-bold mt-8 mb-4 text-blue-600">
+    <div
+      className="flex flex-col bg-slate-100"
+      style={{ minHeight: 'calc(var(--vh, 1vh) * 100)' }}
+    >
+      {/* Accessible Site Header */}
+      <header className="w-full py-6">
+        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700" tabIndex={0}>
           Rawdah Mosque Prayer Times
         </h1>
-        {loading ? (
-          <p className="mt-8 text-lg text-gray-500">Loading...</p>
-        ) : error ? (
-          <p className="mt-8 text-red-600">{error}</p>
-        ) : !todayObj ? (
-          <p className="mt-8 text-lg text-gray-500">No data for today.</p>
-        ) : (
-          <>
-            {/* Date and Islamic month at top */}
-            <div className="mb-2 text-center">
-              <div className="font-bold text-lg">
-                {formatDateDisplay(todayObj.day, todayObj.date)}
-              </div>
-              {todayObj.islamic_month && todayObj.islamic_day && (
-                <div className="text-sm text-gray-500">
-                  {todayObj.islamic_month} {todayObj.islamic_day}
-                </div>
-              )}
+      </header>
+
+      {/* Main Content Landmark */}
+      <main className="flex-1 flex flex-col items-center w-full px-2" id="main-content">
+        {/* Date and Islamic Month */}
+        {!loading && !error && todayObj && (
+          <section className="mb-2 text-center" aria-labelledby="date-label">
+            <div
+              id="date-label"
+              className="font-bold text-lg"
+              tabIndex={0}
+              aria-label={`Date: ${formatDateDisplay(todayObj.day, todayObj.date)}`}
+            >
+              {formatDateDisplay(todayObj.day, todayObj.date)}
             </div>
-            {/* Countdown */}
+            {todayObj.islamic_month && todayObj.islamic_day && (
+              <div
+                className="text-sm text-gray-500"
+                tabIndex={0}
+                aria-label={`Islamic Month: ${todayObj.islamic_day} ${todayObj.islamic_month} `}
+              >
+                {todayObj.islamic_day} {todayObj.islamic_month}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Error and Loading States */}
+        {loading && (
+          <p className="my-8 text-lg text-gray-500" role="status">Loading…</p>
+        )}
+        {error && (
+          <p className="my-8 text-red-600" role="alert">{error}</p>
+        )}
+        {!loading && !error && !todayObj && (
+          <p className="my-8 text-lg text-gray-500">No data for today.</p>
+        )}
+
+        {/* Main App Content */}
+        {!loading && !error && todayObj && (
+          <>
             {nextPrayer && (
               <Countdown
                 targetDateTime={nextPrayer.dateObj}
                 label={nextPrayer.name}
               />
             )}
-            {/* Table */}
             <PrayerTimes times={prayerTimes} />
           </>
         )}
-      </div>
-      {/* Footer always at the bottom, only scrolls if content is long */}
+      </main>
+
+      {/* Accessible Footer */}
       <footer className="w-full flex justify-center bg-slate-100 py-2 border-t border-gray-200">
-        <p className="text-center text-xs text-gray-500 max-w-xl">
+        <p className="text-center text-xs text-gray-500 max-w-xl" tabIndex={0}>
           This is an <span className="font-semibold">unofficial prayer times app</span> for the Rawdah Mosque.
           It is <span className="font-semibold">not affiliated</span> with Greensville Trust/Rawdah Mosque.
         </p>
       </footer>
     </div>
   );
+
 }
 
 export default App;

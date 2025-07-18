@@ -1,0 +1,13 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Simple Mosque Icon</title>
+  <g>
+    <path d="M32 10L44 22V54H20V22L32 10Z" fill="#60A5FA"></path>
+    <rect x="26" y="38" width="12" height="16" fill="#1E40AF"></rect>
+    <rect x="16" y="54" width="32" height="4" fill="#A7F3D0"></rect>
+    <path d="M32 2C33.1046 2 34 2.89543 34 4C34 5.10457 33.1046 6 32 6C30.8954 6 30 5.10457 30 4C30 2.89543 30.8954 2 32 2Z" fill="#F59E42"></path>
+    <rect x="10" y="24" width="4" height="30" fill="#A7F3D0"></rect>
+    <rect x="50" y="24" width="4" height="30" fill="#A7F3D0"></rect>
+    <circle cx="12" cy="22" r="4" fill="#60A5FA"></circle>
+    <circle cx="52" cy="22" r="4" fill="#60A5FA"></circle>
+  </g>
+</svg>
