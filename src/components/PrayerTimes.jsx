@@ -13,7 +13,7 @@ function PrayerTimes({ times }) {
               Start
             </th>
             <th scope="col" className="px-6 py-3 text-white text-center">
-              Iqamah
+              Jamaat
             </th>
           </tr>
         </thead>
