@@ -2,28 +2,32 @@ import PrayerTimeRow from "./PrayerTimeRow";
 
 function PrayerTimes({ times }) {
   return (
-    <div className="flex justify-center w-full px-2">
-      <div className="relative overflow-x-auto w-full max-w-xl">
-        <table className="w-full text-sm text-gray-500 bg-white rounded-2xl shadow-lg overflow-hidden">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-center">Prayer</th>
-              <th scope="col" className="px-6 py-3 text-center">Start</th>
-              <th scope="col" className="px-6 py-3 text-center">Iqamah</th>
-            </tr>
-          </thead>
-          <tbody>
-            {times.map((prayer, idx) => (
-              <PrayerTimeRow
-                key={`${prayer.name}-${prayer.time}-${prayer.iqamah}-${idx}`}
-                name={prayer.name}
-                time={prayer.time}
-                iqamah={prayer.iqamah}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="relative overflow-x-auto w-full max-w-2xl mx-auto rounded-2xl shadow-md">
+      <table className="w-full text-sm text-center bg-gray-800 rounded-2xl">
+        <thead className="text-xs uppercase bg-gray-900 text-white">
+          <tr>
+            <th scope="col" className="px-6 py-3 text-white text-center">
+              Prayer
+            </th>
+            <th scope="col" className="px-6 py-3 text-white text-center">
+              Start
+            </th>
+            <th scope="col" className="px-6 py-3 text-white text-center">
+              Iqamah
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {times.map((prayer, idx) => (
+            <PrayerTimeRow
+              key={prayer.name + idx}
+              name={prayer.name}
+              time={prayer.time}
+              iqamah={prayer.iqamah}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
