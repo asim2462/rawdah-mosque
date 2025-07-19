@@ -1,4 +1,4 @@
-function PrayerTimeRow({ name, time, iqamah }) {
+function PrayerTimeRow({ name, time, jamaat }) {
   return (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
       <th
@@ -8,7 +8,7 @@ function PrayerTimeRow({ name, time, iqamah }) {
         {name}
       </th>
       <td className="px-6 py-4 text-white text-center">{time}</td>
-      <td className="px-6 py-4 text-white text-center">{iqamah || "—"}</td>
+      <td className="px-6 py-4 text-white text-center">{jamaat || "—"}</td>
     </tr>
   );
 }

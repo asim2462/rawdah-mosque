@@ -23,7 +23,7 @@ function PrayerTimes({ times }) {
               key={prayer.name + idx}
               name={prayer.name}
               time={prayer.time}
-              iqamah={prayer.iqamah}
+              jamaat={prayer.jamaat}
             />
           ))}
         </tbody>
