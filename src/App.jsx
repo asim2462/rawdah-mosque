@@ -85,7 +85,6 @@ function App() {
 
   // Get today's date in UK time zone
   const todayStr = getUKTodayString();
-  console.log(todayStr);
 
   // Ensure 100vh fix for mobile browsers (for full-height layout)
   useEffect(() => {
