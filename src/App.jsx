@@ -81,6 +81,7 @@ function App() {
   const [tomorrowPrayerTimes, setTomorrowPrayerTimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [now, setNow] = useState(Date.now());
 
   // Get today's date in UK time zone
   const todayStr = getUKTodayString();
@@ -128,6 +129,12 @@ function App() {
       });
 
   }, [todayStr]);
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 1000); // update every second
+    return () => clearInterval(interval); // cleanup to prevent memory leaks
+  }, []);
+
 
   // Determine the next upcoming prayer
   const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
