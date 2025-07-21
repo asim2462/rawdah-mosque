@@ -134,7 +134,6 @@ function App() {
     return () => clearInterval(interval); // cleanup to prevent memory leaks
   }, []);
 
-
   // Determine the next upcoming prayer
   const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
 
@@ -196,7 +195,7 @@ function App() {
                 now={now}
               />
             )}
-            <PrayerTimes times={prayerTimes} />
+            <PrayerTimes times={prayerTimes} highlightedPrayer={nextPrayer ? nextPrayer.name : null} />
           </>
         )}
       </main>
