@@ -130,7 +130,7 @@ function App() {
   }, [todayStr]);
 
   useEffect(() => {
-    const interval = setInterval(() => setNow(Date.now()), 1000); // update every second
+    const interval = setInterval(() => setNow(Date.now()), 500); // update every second
     return () => clearInterval(interval); // cleanup to prevent memory leaks
   }, []);
 
