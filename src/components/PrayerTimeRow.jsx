@@ -1,9 +1,9 @@
 function PrayerTimeRow({ name, time, jamaat, isHighlighted }) {
-  // If highlighted, use black text for contrast, else use white
-  const textColor = isHighlighted ? "text-black font-bold" : "text-white";
+  // Highlighted row: yellow background, white bold text for all cells
   const rowBg = isHighlighted
     ? "bg-yellow-400/40 border-yellow-400"
     : "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200";
+  const textColor = "text-white" + (isHighlighted ? " font-bold" : "");
 
   return (
     <tr
