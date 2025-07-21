@@ -193,6 +193,7 @@ function App() {
               <Countdown
                 targetDateTime={nextPrayer.dateObj}
                 label={nextPrayer.name}
+                now={now}
               />
             )}
             <PrayerTimes times={prayerTimes} />

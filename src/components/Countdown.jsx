@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-
-function getTimeDiffString(targetTime) {
-  const now = new Date();
+function getTimeDiffString(targetTime, now) {
+  if (!targetTime) return "";
   const diff = targetTime - now;
   if (diff <= 0) return "Now";
 
@@ -11,15 +9,8 @@ function getTimeDiffString(targetTime) {
   return `${hours > 0 ? hours + "h " : ""}${minutes}m ${seconds}s`;
 }
 
-export default function Countdown({ targetDateTime, label }) {
-  const [remaining, setRemaining] = useState(getTimeDiffString(targetDateTime));
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRemaining(getTimeDiffString(targetDateTime));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [targetDateTime]);
+export default function Countdown({ targetDateTime, label, now }) {
+  const remaining = getTimeDiffString(targetDateTime, now);
 
   return (
     <div className="my-4 text-center text-lg font-semibold text-green-700">
