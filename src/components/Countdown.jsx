@@ -13,9 +13,9 @@ export default function Countdown({ targetDateTime, label, now }) {
   const remaining = getTimeDiffString(targetDateTime, now);
 
   return (
-    <div className="my-4 text-center text-lg font-semibold text-green-700">
-      Next prayer (<span className="capitalize">{label}</span>) in:{" "}
-      <span className="font-mono">{remaining}</span>
+    <div className="my-4 text-center text-lg text-green-700">
+      <span className="font-normal">{label} in: </span>
+      <span className="font-bold font-mono">{remaining}</span>
     </div>
   );
 }
