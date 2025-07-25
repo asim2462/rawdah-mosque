@@ -139,9 +139,13 @@ function App() {
 
   return (
     <div
-      className="flex flex-col bg-slate-100"
-      style={{ minHeight: 'calc(var(--vh, 1vh) * 100)' }}
+      className="flex flex-col min-h-screen relative bg-cover bg-center"
+      style={{
+        minHeight: 'calc(var(--vh, 1vh) * 100)',
+        backgroundImage: "url('/bg-pattern.svg')"
+      }}
     >
+
       {/* Accessible Site Header */}
       <header className="w-full py-6">
         <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700" tabIndex={0}>
