@@ -148,7 +148,7 @@ function App() {
 
       {/* Accessible Site Header */}
       <header className="w-full py-6">
-        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700" tabIndex={0}>
+        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-black" tabIndex={0}>
           Rawdah Mosque Prayer Times
         </h1>
       </header>
