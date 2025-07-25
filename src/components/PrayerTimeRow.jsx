@@ -1,8 +1,15 @@
-function PrayerTimeRow({ name, time, jamaat, isHighlighted }) {
-  // Highlighted row: yellow background, white bold text for all cells
-  const rowBg = isHighlighted
-    ? "bg-yellow-400/40 border-yellow-400"
-    : "bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200";
+function PrayerTimeRow({ name, time, jamaat, isHighlighted, idx }) {
+  // Use highlight color, otherwise alternate backgrounds by index
+  let rowBg;
+  if (isHighlighted) {
+    rowBg = "bg-yellow-400/40 border-yellow-400";
+  } else {
+    rowBg =
+      (idx % 2 === 0
+        ? "bg-[#1c343e]"
+        : "bg-[#30424e]") +
+      " border-b border-gray-700";
+  }
   const textColor = "text-white" + (isHighlighted ? " font-bold" : "");
 
   return (
@@ -21,4 +28,5 @@ function PrayerTimeRow({ name, time, jamaat, isHighlighted }) {
     </tr>
   );
 }
+
 export default PrayerTimeRow;
