@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PrayerTimes from "./components/PrayerTimes";
 import Countdown from "./components/Countdown";
+import Announcements from "./components/Announcements";
 import Papa from "papaparse";
 
 // === Google Sheet CSV URL ===
@@ -27,9 +28,9 @@ function convertDayToPrayerArray(dayObj) {
     { name: "Fajr", time: dayObj.fajr_start, jamaat: dayObj.fajr_jamaat },
     { name: "Sunrise", time: dayObj.sunrise, jamaat: "" }, // Sunrise row
     { name: "Dhuhr", time: dayObj.dhuhr_start, jamaat: dayObj.dhuhr_jamaat },
-    { name: "Asr", time: dayObj.asr_start, jamaat: dayObj.asr_jamaat },
+    { name: "'Asr", time: dayObj.asr_start, jamaat: dayObj.asr_jamaat },
     { name: "Maghrib", time: dayObj.maghrib_start, jamaat: dayObj.maghrib_jamaat },
-    { name: "Isha", time: dayObj.isha_start, jamaat: dayObj.isha_jamaat },
+    { name: "'Isha", time: dayObj.isha_start, jamaat: dayObj.isha_jamaat },
   ];
 }
 
@@ -202,6 +203,8 @@ function App() {
             <PrayerTimes times={prayerTimes} highlightedPrayer={nextPrayer ? nextPrayer.name : null} />
           </>
         )}
+
+        <Announcements/>
       </main>
 
       {/* Accessible Footer */}
