@@ -149,7 +149,7 @@ function App() {
 
       {/* Accessible Site Header */}
       <header className="w-full py-6">
-        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-[#143345]" tabIndex={0}>
+        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-[#ffffff]" tabIndex={0}>
           Rawdah Mosque Prayer Times
         </h1>
       </header>
@@ -161,7 +161,7 @@ function App() {
           <section className="mb-2 text-center" aria-labelledby="date-label">
             <div
               id="date-label"
-              className="font-bold text-lg text-[#143345]"
+              className="font-bold text-lg text-[#ffffff]"
               tabIndex={0}
               aria-label={`Date: ${formatDateDisplay(todayObj.day, todayObj.date)}`}
             >
@@ -169,7 +169,7 @@ function App() {
             </div>
             {todayObj.islamic_month && todayObj.islamic_day && (
               <div
-                className="text-sm text-[#143345]"
+                className="text-sm text-[#ffffff]"
                 tabIndex={0}
                 aria-label={`Islamic Month: ${todayObj.islamic_day} ${todayObj.islamic_month}`}
               >
