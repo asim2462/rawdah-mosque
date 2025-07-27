@@ -1,1 +1,7 @@
 @import "tailwindcss";
+@font-face {
+  font-family: 'Butler-Black';
+  src: url('./assets/fonts/UVHWIJ+Butler-Black.ttf') format('ttf');
+  font-weight: 900;
+  font-style: normal;
+}

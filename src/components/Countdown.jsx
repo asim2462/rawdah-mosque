@@ -13,7 +13,7 @@ export default function Countdown({ targetDateTime, label, now }) {
   const remaining = getTimeDiffString(targetDateTime, now);
 
   return (
-    <div className="my-4 text-center text-lg text-[#ffffff]">
+    <div className="my-4 text-center text-lg text-[#fef687]">
       <span className="font-normal">{label} in: </span>
       <span className="font-bold font-mono">{remaining}</span>
     </div>
