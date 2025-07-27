@@ -206,14 +206,6 @@ function App() {
 
         <Announcements/>
       </main>
-
-      {/* Accessible Footer */}
-      <footer className="w-full flex justify-center bg-slate-100 py-2 border-t border-gray-200">
-        <p className="text-center text-xs text-gray-500 max-w-xl" tabIndex={0}>
-          This is an <span className="font-semibold">unofficial prayer times app</span> for the Rawdah Mosque.
-          It is <span className="font-semibold">not affiliated</span> with Greensville Trust/Rawdah Mosque.
-        </p>
-      </footer>
     </div>
   );
 }
