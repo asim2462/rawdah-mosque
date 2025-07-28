@@ -143,39 +143,30 @@ function App() {
       className="flex flex-col min-h-screen relative bg-cover bg-center"
       style={{
         minHeight: 'calc(var(--vh, 1vh) * 100)',
-        backgroundImage: "url('/bg-pattern.svg')"
+        backgroundImage: "url('/bg_pattern_blue.jpg')"
       }}
     >
 
       {/* Accessible Site Header */}
       <header className="w-full py-6">
-        <h1 className="text-center text-2xl sm:text-3xl md:text-5xl font-bold text-[#ffffff]" tabIndex={0} style={{ fontFamily: 'Butler-Black, serif' }}>
-          1447 {todayObj?.islamic_month} Prayer Times 
+        <h1 className="text-center text-2xl sm:text-3xl md:text-5xl  text-[#ffffff] font-bold" tabIndex={0} style={{ fontFamily: 'BerlingskeSerif-Regular' }}>
+          {todayObj?.islamic_day} {todayObj?.islamic_month} Prayer Times
         </h1>
       </header>
 
       {/* Main Content Landmark */}
       <main className="flex-1 flex flex-col items-center w-full px-2" id="main-content">
-        {/* Date and Islamic Month */}
+        {/* Gregorian Date and Month */}
         {!loading && !error && todayObj && (
           <section className="mb-2 text-center" aria-labelledby="date-label">
             <div
               id="date-label"
-              className="font-bold text-lg text-[#ffffff]" style={{ fontFamily: 'Butler-Black, serif' }}
+              className="text-lg text-[#ffffff]" style={{ fontFamily: 'avenir-next-demi-bold' }}
               tabIndex={0}
               aria-label={`Date: ${formatDateDisplay(todayObj.day, todayObj.date)}`}
             >
               {formatDateDisplay(todayObj.day, todayObj.date)}
             </div>
-            {todayObj.islamic_month && todayObj.islamic_day && (
-              <div
-                className="text-sm text-[#ffffff]" style={{ fontFamily: 'Butler-Black, serif' }}
-                tabIndex={0}
-                aria-label={`Islamic Month: ${todayObj.islamic_day} ${todayObj.islamic_month}`}
-              >
-                {todayObj.islamic_day} {todayObj.islamic_month}
-              </div>
-            )}
           </section>
         )}
 
@@ -204,8 +195,35 @@ function App() {
           </>
         )}
 
-        <Announcements/>
+        <Announcements />
       </main>
+      {/* Accessible Footer */}
+<footer className="w-full flex flex-col items-center justify-center py-2 gap-1" style={{ fontFamily: 'avenir-next-demi-bold' }}>
+  <p className="text-center max-w-5xl mx-auto whitespace-normal lg:whitespace-nowrap text-[#ffffff]">
+    The fajr time is based on the ISNA angle degree rule. The isha time is based on the 15 degree rule.
+  </p>
+  <p className="text-center max-w-5xl mx-auto whitespace-normal lg:whitespace-nowrap text-[#bf9743]">
+    GREENSVILLE TRUST MUSTAFA MOUNT: EMM LANE CAMPUS. EMM LANE BRADFORD, BD9 4JL
+  </p>
+  {/* 3x4 safezone box, logo centered, not stretched */}
+  <div
+    className="flex items-center justify-center my-4"
+  >
+    <img
+      src="/rawdah_mosque_logo.png"
+      alt="Rawdah Mosque Logo"
+      style={{
+        maxWidth: '50%',
+        maxHeight: '20%',
+        display: 'block',
+        margin: '0 auto'
+      }}
+      draggable="false"
+    />
+  </div>
+</footer>
+
+
     </div>
   );
 }
