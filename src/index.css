@@ -1,17 +1,24 @@
 @import "tailwindcss";
+
 @font-face {
   font-family: 'avenir-next-demi-bold';
   src: url('./assets/fonts/avenir-next-demi-bold.ttf') format('truetype');
-  font-weight: bold;
+  font-weight:900;
+  font-style: normal;
 }
+
 @font-face {
   font-family: 'avenir-next-regular';
   src: url('./assets/fonts/avenir-next-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
 }
+
 @font-face {
   font-family: 'BerlingskeSerif-Md';
   src: url('./assets/fonts/BerlingskeSerif-Md.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'BerlingskeSerif-Regular';
   src: url('./assets/fonts/BerlingskeSerif-Regular.ttf') format('truetype');

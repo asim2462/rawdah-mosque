@@ -46,7 +46,7 @@ export default function Announcements() {
       {announcements.map((a, idx) => (
         <article
           key={a.ID || idx}
-          className="relative w-full max-w-xl bg-[#0f6248] rounded-2xl shadow-lg px-6 py-5 text-white flex flex-col gap-3"
+          className="relative w-full max-w-xl bg-[#56853c] rounded-2xl shadow-lg px-6 py-5 text-white flex flex-col gap-3"
           aria-label={a.Title ? `Announcement: ${a.Title}` : "Announcement"}
         >
           <div className="flex items-center gap-3 mb-1">
