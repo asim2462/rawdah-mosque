@@ -10,13 +10,17 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: [
-        'app_icon_512.png', // app icon
-        'bg_pattern_blue.jpg', // background image
-        'rawdah_mosque_logo.png' // logo
+        'app_icon_512.png',
+        'bg_pattern_blue.jpg',
+        'rawdah_mosque_logo.png',
+        'assets/fonts/avenir-next-demi-bold.ttf',
+        'assets/fonts/avenir-next-regular.ttf',
+        'assets/fonts/BerlingskeSerif-Md.ttf',
+        'assets/fonts/BerlingskeSerif-Regular.ttf'
       ],
       manifest: {
         name: 'Rawdah Mosque',
-        short_name: 'Rawdah',
+        short_name: 'Rawdah Mosque',
         description: 'Live daily prayer times and announcements for Rawdah Mosque.',
         theme_color: '#56853c',
         background_color: '#163c4c',
