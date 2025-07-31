@@ -1,7 +1,7 @@
 {
   "name": "Rawdah Mosque",
   "short_name": "Rawdah",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#163c4c",
   "theme_color": "#56853c",
