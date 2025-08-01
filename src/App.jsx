@@ -124,7 +124,7 @@ function App() {
         setLoading(false);
       })
       .catch(err => {
-        setError("Could not fetch prayer times.");
+        setError("Could not fetch prayer times. Make sure you are connected to the internet.");
         setLoading(false);
       });
 
