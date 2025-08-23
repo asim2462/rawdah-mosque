@@ -67,7 +67,11 @@ export function getNextPrayer(prayers, tomorrowPrayers) {
 
 // Format date for display (e.g. "Friday 19-07-2025")
 export function formatDateDisplay(day, dateStr) {
-  if (!dateStr || !day) return "";
+  if (!dateStr) return "";
+  const weekday =
+    day ||
+    new Date(dateStr).toLocaleDateString('en-GB', { weekday: 'long', timeZone: 'Europe/London' });
   const [year, month, dayNum] = dateStr.split("-");
-  return `${day} ${dayNum}-${month}-${year}`;
+  return `${weekday} ${dayNum}-${month}-${year}`;
 }
+

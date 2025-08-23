@@ -38,7 +38,6 @@ function App() {
 
   // Find the next prayer based on current time
   const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
-
   return (
     <div
       className="flex flex-col min-h-screen relative bg-cover bg-center"
@@ -58,16 +57,16 @@ function App() {
       <main className="flex-1 flex flex-col items-center w-full px-2" id="main-content">
         {/* Show the date if we have today's data */}
         {!loading && !error && todayObj && (
-          <section className="mb-2 text-center" aria-labelledby="date-label">
-            <div
-              id="date-label"
-              className="text-lg text-[#ffffff]" style={{ fontFamily: 'avenir-next-demi-bold' }}
-              tabIndex={0}
-              aria-label={`Date: ${formatDateDisplay(todayObj.day, todayObj.date)}`}
-            >
-              {formatDateDisplay(todayObj.day, todayObj.date)}
-            </div>
-          </section>
+        <section className="mb-2 text-center" aria-labelledby="date-label">
+          <div
+            id="date-label"
+            className="text-lg text-[#ffffff]" style={{ fontFamily: 'avenir-next-demi-bold' }}
+            tabIndex={0}
+            aria-label={`Date: ${formatDateDisplay(todayObj.day, todayObj.date)}`}
+          >
+            {formatDateDisplay(todayObj.day, todayObj.date)}
+          </div>
+        </section>
         )}
 
         {/* Show loading indicator */}
