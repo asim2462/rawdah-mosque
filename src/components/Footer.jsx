@@ -11,9 +11,10 @@ export default function Footer() {
         <img
           src="/rawdah_mosque_logo.png"
           alt="Rawdah Mosque Logo"
+          width="215"
           style={{
-            maxWidth: '50%',
-            maxHeight: '20%',
+            //maxWidth: '50%',
+            //maxHeight: '20%',
             display: 'block',
             margin: '0 auto'
           }}

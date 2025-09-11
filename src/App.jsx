@@ -3,7 +3,7 @@ import PrayerTimes from "./components/PrayerTimes";
 import Countdown from "./components/Countdown";
 import Announcements from "./components/Announcements";
 import { usePrayerTimes } from "./hooks/usePrayerTimes";
-import { getNextPrayer, formatDateDisplay } from "./utils/prayerUtils";
+import { getNextPrayer, formatGregorianShort, formatWeekdayLong } from "./utils/prayerUtils";
 import Footer from "./components/Footer";
 
 // The root component for the prayer times app.
@@ -38,6 +38,10 @@ function App() {
 
   // Find the next prayer based on current time
   const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
+
+  const weekdayText = todayObj ? formatWeekdayLong(todayObj.date) : "";
+  const dateText = todayObj ? formatGregorianShort(todayObj.date) : "";
+
   return (
     <div
       className="flex flex-col min-h-screen relative bg-cover bg-center"
@@ -48,7 +52,11 @@ function App() {
     >
       {/* Header: Shows the current Islamic day/month */}
       <header className="w-full py-6">
-        <h1 className="text-center text-2xl sm:text-3xl md:text-5xl  text-[#ffffff] font-bold" tabIndex={0} style={{ fontFamily: 'BerlingskeSerif-Regular' }}>
+        <h1
+          className="text-center text-2xl sm:text-3xl md:text-5xl  text-[#ffffff] font-bold"
+          tabIndex={0}
+          style={{ fontFamily: 'BerlingskeSerif-Regular' }}
+        >
           {todayObj?.islamic_day} {todayObj?.islamic_month} Prayer Times
         </h1>
       </header>
@@ -57,16 +65,17 @@ function App() {
       <main className="flex-1 flex flex-col items-center w-full px-2" id="main-content">
         {/* Show the date if we have today's data */}
         {!loading && !error && todayObj && (
-        <section className="mb-2 text-center" aria-labelledby="date-label">
-          <div
-            id="date-label"
-            className="text-lg text-[#ffffff]" style={{ fontFamily: 'avenir-next-demi-bold' }}
-            tabIndex={0}
-            aria-label={`Date: ${formatDateDisplay(todayObj.day, todayObj.date)}`}
-          >
-            {formatDateDisplay(todayObj.day, todayObj.date)}
-          </div>
-        </section>
+          <section className="mb-2 text-center" aria-labelledby="date-label">
+            <div
+              id="date-label"
+              className="text-lg text-[#ffffff]"
+              style={{ fontFamily: 'avenir-next-demi-bold' }}
+              tabIndex={0}
+              aria-label={`Date: ${weekdayText} ${dateText}`}
+            >
+              {weekdayText} {dateText}
+            </div>
+          </section>
         )}
 
         {/* Show loading indicator */}
@@ -94,7 +103,10 @@ function App() {
                 now={now}
               />
             )}
-            <PrayerTimes times={prayerTimes} highlightedPrayer={nextPrayer ? nextPrayer.name : null} />
+            <PrayerTimes
+              times={prayerTimes}
+              highlightedPrayer={nextPrayer ? nextPrayer.name : null}
+            />
           </>
         )}
 

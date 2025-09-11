@@ -75,3 +75,50 @@ export function formatDateDisplay(day, dateStr) {
   return `${weekday} ${dayNum}-${month}-${year}`;
 }
 
+/* ---------------- New helpers for your header date ---------------- */
+
+// Parse "YYYY-MM-DD" or "DD-MM-YYYY" or "DD/MM/YYYY" (and Date) anchored at UTC midnight
+function parseDateFlexible(input) {
+  if (!input) return null;
+
+  if (input instanceof Date) {
+    return new Date(Date.UTC(input.getUTCFullYear(), input.getUTCMonth(), input.getUTCDate()));
+  }
+
+  const s = String(input).slice(0, 10); // ignore any time suffix
+  // normalise separators to "-"
+  const norm = s.replaceAll("/", "-");
+
+  // YYYY-MM-DD
+  let m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(norm);
+  if (m) return new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+
+  // DD-MM-YYYY
+  m = /^(\d{2})-(\d{2})-(\d{4})$/.exec(norm);
+  if (m) return new Date(Date.UTC(+m[3], +m[2] - 1, +m[1]));
+
+  // Fallback: let Date try
+  const d = new Date(norm);
+  return isNaN(d) ? null : new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+}
+
+// "YYYY-MM-DD" / "DD-MM-YYYY" / "DD/MM/YYYY" -> "11 September"
+export function formatGregorianShort(isoOrDmy, locale = "en-GB") {
+  const d = parseDateFlexible(isoOrDmy);
+  if (!d) return String(isoOrDmy || "");
+  return new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "long",
+    timeZone: "UTC",
+  }).format(d);
+}
+
+// Weekday from the same date -> "Thursday"
+export function formatWeekdayLong(isoOrDmy, locale = "en-GB") {
+  const d = parseDateFlexible(isoOrDmy);
+  if (!d) return "";
+  return new Intl.DateTimeFormat(locale, {
+    weekday: "long",
+    timeZone: "Europe/London",
+  }).format(d);
+}
