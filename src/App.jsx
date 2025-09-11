@@ -3,118 +3,158 @@ import PrayerTimes from "./components/PrayerTimes";
 import Countdown from "./components/Countdown";
 import Announcements from "./components/Announcements";
 import { usePrayerTimes } from "./hooks/usePrayerTimes";
-import { getNextPrayer, formatGregorianShort, formatWeekdayLong } from "./utils/prayerUtils";
+import { getNextPrayer, formatGregorianShort, formatWeekdayLong, getUKTodayString } from "./utils/prayerUtils";
 import Footer from "./components/Footer";
+import HeaderDate from "./components/date/HeaderDate.jsx";
+import PreviewBanner from "./components/date/PreviewBanner.jsx";
 
 // The root component for the prayer times app.
 function App() {
-  // State to track the current time (for live countdowns)
   const [now, setNow] = useState(Date.now());
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [selectedDateKey, setSelectedDateKey] = useState(null);
 
-  // Custom hook: fetches today's/tomorrow's prayer times and loading/error state from Supabase
+  // 1) Today's/tomorrow's (existing behaviour)
   const {
-    prayerTimes,
-    todayObj,
+    prayerTimes: todayTimes,
+    todayObj: todayObjReal,
     tomorrowPrayerTimes,
-    loading,
-    error,
-  } = usePrayerTimes();
+    loading: loadingToday,
+    error: errorToday,
+  } = usePrayerTimes(); // no arg -> today mode
 
-  // Responsive CSS variable to set 100vh for mobile browsers (fixes issues with mobile address bar)
+  // Default selection to today when it arrives
+  useEffect(() => {
+    if (todayObjReal?.date && !selectedDateKey) {
+      setSelectedDateKey(todayObjReal.date);
+    }
+  }, [todayObjReal?.date, selectedDateKey]);
+
+  // 2) Preview mode: fetch only when selected date differs from real today
+  const isPreviewing =
+    !!(todayObjReal?.date && selectedDateKey && selectedDateKey !== todayObjReal.date);
+
+  const {
+    prayerTimes: previewTimes,
+    todayObj: previewObj,
+    loading: loadingPreview,
+    error: errorPreview,
+  } = usePrayerTimes(isPreviewing ? selectedDateKey : null); // pass the date only when previewing
+
+  // Header shows the selected date (today or preview)
+  const headerKey = selectedDateKey || todayObjReal?.date || getUKTodayString();
+  const weekdayText = headerKey ? formatWeekdayLong(headerKey) : "";
+  const dateText = headerKey ? formatGregorianShort(headerKey) : "";
+
+  // ✅ Islamic header switches with preview
+  const islamicHeaderDay = isPreviewing ? previewObj?.islamic_day : todayObjReal?.islamic_day;
+  const islamicHeaderMonth = isPreviewing ? previewObj?.islamic_month : todayObjReal?.islamic_month;
+
+  // Countdown only for *real today*
+  const nextPrayer = getNextPrayer(todayTimes, tomorrowPrayerTimes);
+  const showCountdown = !isPreviewing && !!nextPrayer;
+
+  // Decide which times to render
+  const timesToRender = isPreviewing ? previewTimes : todayTimes;
+  const loading = isPreviewing ? loadingPreview : loadingToday;
+  const error = isPreviewing ? errorPreview : errorToday;
+
+  // VH fix
   useEffect(() => {
     function setVh() {
-      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+      document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
     }
     setVh();
-    window.addEventListener('resize', setVh);
-    return () => window.removeEventListener('resize', setVh);
+    window.addEventListener("resize", setVh);
+    return () => window.removeEventListener("resize", setVh);
   }, []);
 
-  // Update `now` every second to make the countdown live
+  // Live now for countdown
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Find the next prayer based on current time
-  const nextPrayer = getNextPrayer(prayerTimes, tomorrowPrayerTimes);
+  // Popover controls
+  const openDatePicker = () => setIsDatePickerOpen(true);
+  const closeDatePicker = () => setIsDatePickerOpen(false);
 
-  const weekdayText = todayObj ? formatWeekdayLong(todayObj.date) : "";
-  const dateText = todayObj ? formatGregorianShort(todayObj.date) : "";
+  // Select date (from the custom calendar)
+  const handleSelectDateKey = (key) => {
+    setSelectedDateKey(key);
+    setIsDatePickerOpen(false);
+  };
+
+  // Back to today
+  const handleBackToToday = () => {
+    if (todayObjReal?.date) setSelectedDateKey(todayObjReal.date);
+  };
 
   return (
     <div
       className="flex flex-col min-h-screen relative bg-cover bg-center"
       style={{
-        minHeight: 'calc(var(--vh, 1vh) * 100)',
-        backgroundImage: "url('/bg_pattern_blue.jpg')"
+        minHeight: "calc(var(--vh, 1vh) * 100)",
+        backgroundImage: "url('/bg_pattern_blue.jpg')",
       }}
     >
-      {/* Header: Shows the current Islamic day/month */}
+      {/* Header: Islamic day/month (updates when previewing) */}
       <header className="w-full py-6">
         <h1
           className="text-center text-2xl sm:text-3xl md:text-5xl  text-[#ffffff] font-bold"
           tabIndex={0}
-          style={{ fontFamily: 'BerlingskeSerif-Regular' }}
+          style={{ fontFamily: "BerlingskeSerif-Regular" }}
         >
-          {todayObj?.islamic_day} {todayObj?.islamic_month} Prayer Times
+          {islamicHeaderDay} {islamicHeaderMonth} Prayer Times
         </h1>
       </header>
 
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center w-full px-2" id="main-content">
-        {/* Show the date if we have today's data */}
-        {!loading && !error && todayObj && (
-          <section className="mb-2 text-center" aria-labelledby="date-label">
-            <div
-              id="date-label"
-              className="text-lg text-[#ffffff]"
-              style={{ fontFamily: 'avenir-next-demi-bold' }}
-              tabIndex={0}
-              aria-label={`Date: ${weekdayText} ${dateText}`}
-            >
-              {weekdayText} {dateText}
-            </div>
-          </section>
-        )}
-
-        {/* Show loading indicator */}
-        {loading && (
-          <p className="my-8 text-lg text-gray-500" role="status">Loading…</p>
-        )}
-
-        {/* Show error if data failed to load */}
-        {error && (
-          <p className="my-8 text-red-600" role="alert">{error}</p>
-        )}
-
-        {/* Show "No data" if loaded but nothing for today */}
-        {!loading && !error && !todayObj && (
-          <p className="my-8 text-lg text-gray-500">No data for today.</p>
-        )}
-
-        {/* Show countdown and prayer times if we have data */}
-        {!loading && !error && todayObj && (
+        {/* Date line with centered modal calendar */}
+        {!loadingToday && !errorToday && (todayObjReal || selectedDateKey) && (
           <>
-            {nextPrayer && (
-              <Countdown
-                targetDateTime={nextPrayer.dateObj}
-                label={nextPrayer.name}
-                now={now}
-              />
+            <HeaderDate
+              weekdayText={weekdayText}
+              dateText={dateText}
+              // Modal controls
+              isDatePickerOpen={isDatePickerOpen}
+              onOpenDatePicker={openDatePicker}
+              onCloseDatePicker={closeDatePicker}
+              // Selection
+              currentDateValue={headerKey}
+              selectedDateKey={selectedDateKey || todayObjReal?.date}
+              onSelectDateKey={handleSelectDateKey}
+            />
+
+            {/* Preview banner */}
+            <PreviewBanner active={isPreviewing} onBack={handleBackToToday} />
+          </>
+        )}
+
+        {/* Loading / error / empty for whichever times we're showing */}
+        {loading && <p className="my-8 text-lg text-gray-300" role="status">Loading…</p>}
+        {error && <p className="my-8 text-red-400" role="alert">{error}</p>}
+        {!loading && !error && !timesToRender?.length && (
+          <p className="my-8 text-lg text-gray-300">No prayer times for this date.</p>
+        )}
+
+        {/* Countdown + table */}
+        {!loading && !error && timesToRender?.length > 0 && (
+          <>
+            {showCountdown && (
+              <Countdown targetDateTime={nextPrayer.dateObj} label={nextPrayer.name} now={now} />
             )}
             <PrayerTimes
-              times={prayerTimes}
-              highlightedPrayer={nextPrayer ? nextPrayer.name : null}
+              times={timesToRender}
+              highlightedPrayer={showCountdown ? nextPrayer.name : null}
             />
           </>
         )}
 
-        {/* Announcements component (shows if any) */}
         <Announcements />
       </main>
 
-      {/* Footer is now its own component */}
       <Footer />
     </div>
   );
