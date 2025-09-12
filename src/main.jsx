@@ -4,13 +4,13 @@ import './index.css'
 import App from './App.jsx'
 import { Analytics } from "@vercel/analytics/react";
 import { TimeFormatProvider } from './context/TimeFormatContext.jsx';
-import SettingsMount from './components/settings/SettingsMount.jsx';
+import DrawerMount from './components/drawer/DrawerMount.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <TimeFormatProvider>
       {/* Settings UI mounted globally with fixed/portal-like behavior */}
-      <SettingsMount />
+      <DrawerMount />
       <App />
       <Analytics />
     </TimeFormatProvider>

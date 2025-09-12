@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import PrayerTimes from "./components/PrayerTimes";
 import Countdown from "./components/Countdown";
-import Announcements from "./components/Announcements";
 import { usePrayerTimes } from "./hooks/usePrayerTimes";
 import { getNextPrayer, formatGregorianShort, formatWeekdayLong, getUKTodayString } from "./utils/prayerUtils";
 import Footer from "./components/Footer";
@@ -151,10 +150,7 @@ function App() {
             />
           </>
         )}
-
-        <Announcements />
       </main>
-
       <Footer />
     </div>
   );

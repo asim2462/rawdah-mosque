@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="w-full flex flex-col items-center justify-center py-2 gap-1" style={{ fontFamily: 'avenir-next-demi-bold' }}>
+    <footer className="w-full flex flex-col items-center justify-center py-2 gap-1 mt-4" style={{ fontFamily: 'avenir-next-demi-bold' }}>
       <p className="text-center max-w-5xl mx-auto whitespace-normal lg:whitespace-nowrap text-[#ffffff]">
         The fajr time is based on the ISNA angle degree rule. The isha time is based on the 15 degree rule.
       </p>
