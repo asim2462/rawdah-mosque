@@ -58,16 +58,6 @@ function App() {
   const loading = isPreviewing ? loadingPreview : loadingToday;
   const error = isPreviewing ? errorPreview : errorToday;
 
-  // VH fix
-  useEffect(() => {
-    function setVh() {
-      document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
-    }
-    setVh();
-    window.addEventListener("resize", setVh);
-    return () => window.removeEventListener("resize", setVh);
-  }, []);
-
   // Live now for countdown
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
@@ -91,18 +81,23 @@ function App() {
 
   return (
     <div
-      className="flex flex-col min-h-screen relative bg-cover bg-center"
-      style={{
-        minHeight: "calc(var(--vh, 1vh) * 100)",
-        backgroundImage: "url('/bg_pattern_blue.jpg')",
-      }}
+      className="
+        flex flex-col relative
+        min-h-screen
+        min-h-[100svh] min-h-[100dvh]
+        bg-[#013C54]
+        bg-cover bg-center bg-[url('/bg_pattern_blue.jpg')]
+        pb-safe
+      "
     >
       {/* Header: Islamic day/month (updates when previewing) */}
       <header className="w-full py-6">
         <h1
-          className="text-center text-2xl sm:text-3xl md:text-5xl  text-[#ffffff] font-bold"
+          className="
+            text-center text-2xl sm:text-3xl md:text-5xl text-[#ffffff] font-bold
+            font-[BerlingskeSerif-Regular]
+          "
           tabIndex={0}
-          style={{ fontFamily: "BerlingskeSerif-Regular" }}
         >
           {islamicHeaderDay} {islamicHeaderMonth} Prayer Times
         </h1>

@@ -85,7 +85,14 @@ export default function Drawer({ open, onClose }) {
             aria-label="App drawer"
             ref={panelRef}
             tabIndex={-1}
-            className="fixed right-0 top-0 z-[100] h-screen w-[360px] sm:w-[400px] bg-[#013C54] text-white shadow-2xl flex flex-col outline-none"
+            className="
+              fixed right-0 top-0 z-[100]
+              h-screen h-[100svh] h-[100dvh]
+              w-[360px] sm:w-[400px]
+              bg-[#013C54] text-white shadow-2xl
+              flex flex-col outline-none
+              pb-safe
+            "
             initial={panelSpring.initial}
             animate={panelSpring.animate}
             exit={panelSpring.exit}
