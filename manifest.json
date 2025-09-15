@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#163c4c",
   "theme_color": "#56853c",
-  "description": "Live daily prayer times and announcements for Rawdah Mosque.",
+  "description": "Daily prayer times and announcements for Rawdah Mosque.",
   "icons": [
     {
       "src": "/app_icon_192.png",
@@ -17,7 +17,7 @@
       "sizes": "512x512",
       "type": "image/png"
     },
-        {
+    {
       "src": "/app_icon_144.png",
       "sizes": "144x144",
       "type": "image/png"

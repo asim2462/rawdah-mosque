@@ -86,7 +86,7 @@ function App() {
         min-h-screen
         min-h-[100svh] min-h-[100dvh]
         bg-[#013C54]
-        bg-cover bg-center bg-[url('/bg_pattern_blue.jpg')]
+        bg-cover bg-center bg-[url('/background.jpg')]
         pb-safe
       "
     >
