@@ -5,6 +5,11 @@
             "source": "/",
             "destination": "/prayertimes",
             "permanent": true
+        },
+        {
+            "source": "/:path((?!prayertimes).*)",
+            "destination": "/prayertimes",
+            "permanent": true
         }
     ],
     "rewrites": [

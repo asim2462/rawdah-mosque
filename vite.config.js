@@ -25,7 +25,7 @@ export default defineConfig({
         theme_color: '#163c4c',
         background_color: '#163c4c',
         display: 'standalone',
-        start_url: '/',
+        start_url: '/prayertimes',
         "icons": [
           {
             "src": "/web-app-manifest-192x192.png",
