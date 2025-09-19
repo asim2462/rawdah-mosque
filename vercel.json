@@ -7,7 +7,14 @@
             "permanent": true
         },
         {
-            "source": "/:path((?!prayertimes).*)",
+            "source": "/((?!prayertimes).*)",
+            "has": [
+                {
+                    "type": "header",
+                    "key": "accept",
+                    "value": "text/html(|;.*)"
+                }
+            ],
             "destination": "/prayertimes",
             "permanent": true
         }
@@ -20,6 +27,44 @@
         {
             "source": "/prayertimes/(.*)",
             "destination": "/index.html"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/manifest.webmanifest",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/manifest+json"
+                }
+            ]
+        },
+        {
+            "source": "/manifest(.*).json",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/manifest+json"
+                }
+            ]
+        },
+        {
+            "source": "/assets/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                }
+            ]
         }
     ]
 }
