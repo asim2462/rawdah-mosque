@@ -22,8 +22,8 @@
     }
   ],
   "background_color": "#163c4c",
-  "theme_color": "#56853c",
+  "theme_color": "#163c4c",
   "display": "standalone",
   "start_url": "/",
-  "description": "Application for prayer times and announcements for Rawdah Mosque Bradford"
+  "description": "Application for prayer times and announcements for Rawdah Mosque, Bradford."
 }

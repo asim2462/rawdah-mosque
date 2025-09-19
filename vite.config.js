@@ -21,27 +21,30 @@ export default defineConfig({
       manifest: {
         name: 'Rawdah Mosque',
         short_name: 'Rawdah Mosque',
-        description: 'Live daily prayer times and announcements for Rawdah Mosque.',
-        theme_color: '#56853c',
+        description: 'Application for prayer times and announcements for Rawdah Mosque, Bradford.',
+        theme_color: '#163c4c',
         background_color: '#163c4c',
         display: 'standalone',
-        start_url: '.',
-        icons: [
+        start_url: '/',
+        "icons": [
           {
-            src: '/app_icon_192.png',
-            sizes: '192x192',
-            type: 'image/png',
+            "src": "/web-app-manifest-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
           },
           {
-            src: '/app_icon_512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            "src": "/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
           },
           {
-            src: '/app_icon_144.png',
-            sizes: '144x144',
-            type: 'image/png',
-          },
+            "src": "/web-app-manifest-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+          }
         ],
       },
     }),
